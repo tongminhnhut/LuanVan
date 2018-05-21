@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "305410210477",
+    "firebase_url": "https://donghostore-244b4.firebaseio.com",
+    "project_id": "donghostore-244b4",
+    "storage_bucket": "donghostore-244b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305410210477:android:e907314552e0a588",
+        "android_client_info": {
+          "package_name": "com.tongminhnhut.luanvan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305410210477-cfrs9ag5786qjhcdjodjuega95cd22t5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tongminhnhut.luanvan",
+            "certificate_hash": "6ccaa042882a1483fcf892888a955607f88e55bc"
+          }
+        },
+        {
+          "client_id": "305410210477-8ahec270qqg3lvaedos62u0ipp6k27ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_1QxTo1hH_hpunkpZMlCzfkcGPyMyj7Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305410210477-8ahec270qqg3lvaedos62u0ipp6k27ff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
