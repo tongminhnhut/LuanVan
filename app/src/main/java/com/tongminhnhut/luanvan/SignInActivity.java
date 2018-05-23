@@ -1,12 +1,15 @@
 package com.tongminhnhut.luanvan;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     EditText edtPhone, edtPass ;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +37,36 @@ public class SignInActivity extends AppCompatActivity {
         mData = FirebaseDatabase.getInstance();
         db_user = mData.getReference("User");
 
-        btnSignIn = findViewById(R.id.btnSignIn_SignIn);
-        edtPhone = findViewById(R.id.edtPhonenumber_SignIp);
-        edtPass = findViewById(R.id.edtPass_SignIp);
+        initView();
+        addEvents();
 
+        Intent intent = getIntent() ;
+        String phone = intent.getStringExtra("Sign");
+        String pass = intent.getStringExtra("SignIn");
+        edtPhone.setText(phone);
+        edtPass.setText(pass);
+
+    }
+
+    private void addEvents() {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(edtPhone.getText().toString().trim(),edtPass.getText().toString().trim());
+                String phone = edtPhone.getText().toString();
+                String pass = edtPass.getText().toString();
+                if (phone.isEmpty()&&pass.isEmpty()){
+                    Toast.makeText(SignInActivity.this, "Vui lòng nhập đầy đủ !", Toast.LENGTH_SHORT).show();
+                } else {
+                    login(edtPhone.getText().toString().trim(), edtPass.getText().toString().trim());
+                }
             }
         });
+    }
 
-
-
-
+    private void initView() {
+        btnSignIn = findViewById(R.id.btnSignIn_SignIn);
+        edtPhone = findViewById(R.id.edtPhonenumber_SignIp);
+        edtPass = findViewById(R.id.edtPass_SignIp);
     }
 
     private void login(final String phone, final String pass) {

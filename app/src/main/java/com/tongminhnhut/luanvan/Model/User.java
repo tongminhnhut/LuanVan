@@ -9,10 +9,10 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, String phone, String isStaff) {
+
+    public User(String name, String password) {
         Name = name;
         Password = password;
-        Phone = phone;
         IsStaff = "false";
     }
 
