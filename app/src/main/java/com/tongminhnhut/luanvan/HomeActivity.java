@@ -1,5 +1,6 @@
 package com.tongminhnhut.luanvan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,16 +23,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
+import com.tongminhnhut.luanvan.Model.Banner;
 import com.tongminhnhut.luanvan.Model.Category;
 import com.tongminhnhut.luanvan.ViewHolder.MenuViewHolder;
 
@@ -116,8 +124,65 @@ public class HomeActivity extends AppCompatActivity
             loadMenu();
         }else Toast.makeText(this, "Vui lòng kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
 
+        //slider
+        setupSlider();
 
 
+
+
+    }
+
+    private void setupSlider() {
+        sliderLayout = findViewById(R.id.slider_banner);
+        list_image = new HashMap<>();
+
+        final DatabaseReference banner = FirebaseDatabase.getInstance().getReference("Banner");
+
+        banner.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postDataSnapShot:dataSnapshot.getChildren()){
+                    Banner banner1 = postDataSnapShot.getValue(Banner.class);
+
+                    list_image.put(banner1.getName()+"_"+banner1.getId(), banner1.getImage());
+
+                }
+
+                for (String key:list_image.keySet()){
+                    String[] keySplit = key.split("_");
+                    String nameOfFood = keySplit[0];
+                    String idOfFood = keySplit[1];
+
+//                    TextSliderView
+
+                    final TextSliderView textSliderView = new TextSliderView(getBaseContext());
+                    textSliderView.description(nameOfFood)
+                            .image(list_image.get(key))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            ;
+
+                    // Add Extras Bundle
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle().putString("IDFood", idOfFood);
+
+                    sliderLayout.addSlider(textSliderView);
+
+                    // remove event after finish
+                    banner.removeEventListener(this);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(4000);
     }
 
     private void loadMenu() {

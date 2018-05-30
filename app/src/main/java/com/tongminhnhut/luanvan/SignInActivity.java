@@ -1,6 +1,7 @@
 package com.tongminhnhut.luanvan;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,27 +50,6 @@ public class SignInActivity extends AppCompatActivity {
         edtPass.setText(pass);
 
 
-
-
-
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog dialog = new SpotsDialog(SignInActivity.this, "Loading . . .");
-
-                String phone = edtPhone.getText().toString();
-                String pass = edtPass.getText().toString();
-                if (CheckConnection.isConnectedInternet(getApplicationContext())){
-                    Intent intent1 = new Intent(getApplicationContext(), HomeActivity.class);
-                    SignIn_DAL.signIn(dialog,getApplicationContext(),phone, pass,intent1 );
-                    finish();
-                }else {
-                    Toast.makeText(SignInActivity.this, "Kiem tra ket noi !", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
     }
 
 
@@ -78,11 +58,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String phone = edtPhone.getText().toString();
+                final AlertDialog dialog = new SpotsDialog(SignInActivity.this, "Loading . . .");
                 String pass = edtPass.getText().toString();
                 if (phone.isEmpty()&&pass.isEmpty()){
                     Toast.makeText(SignInActivity.this, "Vui lòng nhập đầy đủ !", Toast.LENGTH_SHORT).show();
                 } else {
-                    login(edtPhone.getText().toString().trim(), edtPass.getText().toString().trim());
+                    login(dialog,edtPhone.getText().toString().trim(), edtPass.getText().toString().trim());
+                    finish();
                 }
             }
         });
@@ -94,40 +76,15 @@ public class SignInActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edtPass_SignIp);
     }
 
-    private void login(final String phone, final String pass) {
-        final AlertDialog dialog = new SpotsDialog(SignInActivity.this, "Loading . . .");
-
+    private void login(AlertDialog dialog, final String phone, final String pass) {
         if (CheckConnection.isConnectedInternet(getApplicationContext())){
-            dialog.show();
-            db_user.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(phone).exists()){
-                        dialog.dismiss();
-                        User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
-                        user.setPhone(edtPhone.getText().toString());
-                        if (user.getPassword().equals(MD5.md5(pass))){
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(SignInActivity.this, "Thanh cong", Toast.LENGTH_SHORT).show();
-                        }else {
-                            dialog.dismiss();
-                            Toast.makeText(SignInActivity.this, "Sai ten dang nhap hoac mat khau", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else {
-                        dialog.dismiss();
-                        Toast.makeText(SignInActivity.this, "Tai khoan khong ton tai", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            Intent intent1 = new Intent(getApplicationContext(), HomeActivity.class);
+            SignIn_DAL.signIn(dialog,getApplicationContext(),phone, pass,intent1 );
+            finish();
         }else {
-            Toast.makeText(this, "Vui long kiem tra ket noi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, "Kiem tra ket noi !", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
