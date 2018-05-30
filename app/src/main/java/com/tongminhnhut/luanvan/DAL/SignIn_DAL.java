@@ -12,28 +12,68 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tongminhnhut.luanvan.BLL.MD5;
+import com.tongminhnhut.luanvan.HomeActivity;
 import com.tongminhnhut.luanvan.Model.User;
 import com.tongminhnhut.luanvan.SignInActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
 public class SignIn_DAL {
     public static User curentUser ;
-    public static boolean isConnectedInternet (Context context)
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    static DatabaseReference db_User = FirebaseDatabase.getInstance().getReference("User");
 
-        if (connectivityManager !=null){
-            NetworkInfo[] infos = connectivityManager.getAllNetworkInfo() ;
-            if (infos !=null){
-                for (int i = 0; i<infos.length;i++)
-                {
-                    if (infos[i].getState()== NetworkInfo.State.CONNECTED)
-                        return true;
+
+    public static void signIn(final AlertDialog dialog, final Context context, final String phone, final String pass, final Intent intent){
+//        dialog.show();
+        db_User.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(phone).exists()){
+                    User user = dataSnapshot.child(phone).getValue(User.class);
+                    user.setPhone(phone);
+                    if (user.getPassword().equals(MD5.md5(pass))){
+//                        dialog.dismiss();
+//                        Intent intent = new Intent(context, HomeActivity.class);
+                        intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                        curentUser = user;
+                        context.startActivity(intent);
+                        Toast.makeText(context, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(context, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context, "Tài khoản không tồn tại !", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        return false ;
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public static void signUp (final AlertDialog dialog,final Context context, final String phone,final String pass, final String name){
+        db_User.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(phone).exists()){
+                    Toast.makeText(context, "Tài khoản đã tồn tại !", Toast.LENGTH_SHORT).show();
+                }else {
+                    User user = new User(name, MD5.md5(pass));
+                    db_User.child(phone).setValue(user);
+                    Toast.makeText(context, "Đăng ký thành công !", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

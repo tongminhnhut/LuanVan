@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_thuonghieu"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Thương hiệu " />
+        <item
+            android:id="@+id/nav_thongtin"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Thông tin liên hệ " />
+        <item
+            android:id="@+id/nav_baohanh"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Chính sách bảo hành " />
+        <item
+            android:id="@+id/nav_tintuc"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Tin tức " />
+
+    </group>
+
+
+</menu>
