@@ -37,6 +37,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
+import com.tongminhnhut.luanvan.DAL.LoadMenuDAL;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.Banner;
@@ -100,7 +101,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 if (CheckConnection.isConnectedInternet(HomeActivity.this)){
-                    loadMenu();
+                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
                 }else {
                     Toast.makeText(HomeActivity.this, "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();
                     return;
@@ -112,7 +113,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (CheckConnection.isConnectedInternet(HomeActivity.this)){
-                    loadMenu();
+                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
                 }else {
                     Toast.makeText(HomeActivity.this, "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();
                     return;
@@ -120,103 +121,17 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
+        sliderLayout = findViewById(R.id.slider_banner);
+
+
         if (CheckConnection.isConnectedInternet(getApplicationContext())){
-            loadMenu();
+            LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
+            LoadMenuDAL.loadBanner(sliderLayout, getApplicationContext());
         }else Toast.makeText(this, "Vui lòng kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
 
-        //slider
-        setupSlider();
-
-
-
-
     }
 
-    private void setupSlider() {
-        sliderLayout = findViewById(R.id.slider_banner);
-        list_image = new HashMap<>();
 
-        final DatabaseReference banner = FirebaseDatabase.getInstance().getReference("Banner");
-
-        banner.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postDataSnapShot:dataSnapshot.getChildren()){
-                    Banner banner1 = postDataSnapShot.getValue(Banner.class);
-
-                    list_image.put(banner1.getName()+"_"+banner1.getId(), banner1.getImage());
-
-                }
-
-                for (String key:list_image.keySet()){
-                    String[] keySplit = key.split("_");
-                    String nameOfFood = keySplit[0];
-                    String idOfFood = keySplit[1];
-
-//                    TextSliderView
-
-                    final TextSliderView textSliderView = new TextSliderView(getBaseContext());
-                    textSliderView.description(nameOfFood)
-                            .image(list_image.get(key))
-                            .setScaleType(BaseSliderView.ScaleType.Fit)
-                            ;
-
-                    // Add Extras Bundle
-                    textSliderView.bundle(new Bundle());
-                    textSliderView.getBundle().putString("IDFood", idOfFood);
-
-                    sliderLayout.addSlider(textSliderView);
-
-                    // remove event after finish
-                    banner.removeEventListener(this);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(4000);
-    }
-
-    private void loadMenu() {
-        FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>()
-                .setQuery(db_Category,Category.class)
-                .build();
-
-        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MenuViewHolder holder, int position, @NonNull Category model) {
-                holder.txtName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                        .into(holder.img);
-                holder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-
-                    }
-                });
-            }
-
-            @Override
-            public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, parent, false);
-                return new MenuViewHolder(view);
-            }
-        };
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
-
-        swipeRefreshLayout.setRefreshing(false);
-        recyclerView.getAdapter().notifyDataSetChanged();
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -271,9 +186,4 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.startListening();
-    }
 }

@@ -35,6 +35,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         initView();
         addEvents();
+        final AlertDialog dialog = new SpotsDialog(SignUpActivity.this, "Loading . . .");
+        final String phone = edtPhone.getText().toString().trim();
+        final String name = edtName.getText().toString().trim();
+        final String pass = edtPass.getText().toString().trim();
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                SignIn_DAL.signUp(dialog, getApplicationContext(), phone, pass, name, intent);
+            }
+        });
 
     }
 
@@ -43,11 +54,12 @@ public class SignUpActivity extends AppCompatActivity {
         final String phone = edtPhone.getText().toString().trim();
         final String name = edtName.getText().toString().trim();
         final String pass = edtPass.getText().toString().trim();
+        final User user = new User();
 //        btnSignUp.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                if (CheckConnection.isConnectedInternet(getApplicationContext())){
-//                    SignIn_DAL.signUp(dialog,getApplicationContext(),phone, pass, name);
+//                    SignIn_DAL.signUp(dialog,getApplicationContext(), user);
 //                }else {
 //                    Toast.makeText(SignUpActivity.this, "Vui lòng kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
 //                }
@@ -76,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                                 intent.putExtra("Sign", edtPhone.getText().toString());
                                 intent.putExtra("SignIn", edtPass.getText().toString());
+                                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 Toast.makeText(SignUpActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                                 finish();

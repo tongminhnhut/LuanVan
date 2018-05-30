@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_thuonghieu"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="Thương hiệu " />
         <item
             android:id="@+id/nav_thongtin"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_contact_phone_black_24dp"
             android:title="Thông tin liên hệ " />
         <item
             android:id="@+id/nav_baohanh"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="Chính sách bảo hành " />
         <item
             android:id="@+id/nav_tintuc"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_language_black_24dp"
             android:title="Tin tức " />
 
     </group>
