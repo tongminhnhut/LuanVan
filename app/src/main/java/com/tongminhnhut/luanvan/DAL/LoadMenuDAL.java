@@ -1,6 +1,7 @@
 package com.tongminhnhut.luanvan.DAL;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -34,7 +35,8 @@ public class LoadMenuDAL extends HomeActivity {
     static DatabaseReference db_Banner = FirebaseDatabase.getInstance().getReference("Banner");
     static FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter ;
     static FirebaseRecyclerOptions<Category> options;
-    public static void loadMenu(RecyclerView recyclerView, final Context context, SwipeRefreshLayout swipeRefreshLayout){
+
+    public static void loadMenu(RecyclerView recyclerView, final Context context, SwipeRefreshLayout swipeRefreshLayout, final Intent intent){
         options = new FirebaseRecyclerOptions.Builder<Category>()
                 .setQuery(db_Category, Category.class)
                 .build();
@@ -48,7 +50,9 @@ public class LoadMenuDAL extends HomeActivity {
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-
+                        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("ID", adapter.getRef(position).getKey());
+                        context.startActivity(intent);
                     }
                 });
             }
@@ -66,6 +70,7 @@ public class LoadMenuDAL extends HomeActivity {
 
     }
     static  HashMap<String, String> list_image ;
+
 
     public static void loadBanner(final SliderLayout sliderLayout, final Context context){
         list_image = new HashMap<>();

@@ -23,6 +23,8 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 import info.hoang8f.widget.FButton;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignInActivity extends AppCompatActivity {
     FirebaseDatabase mData ;
@@ -31,10 +33,20 @@ public class SignInActivity extends AppCompatActivity {
     EditText edtPhone, edtPass ;
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fs.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
         setContentView(R.layout.activity_sign_in);
 
         mData = FirebaseDatabase.getInstance();

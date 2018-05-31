@@ -1,6 +1,7 @@
 package com.tongminhnhut.luanvan;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.tongminhnhut.luanvan.Model.User;
 
 import dmax.dialog.SpotsDialog;
 import info.hoang8f.widget.FButton;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignUpActivity extends AppCompatActivity {
     DatabaseReference db_user ;
@@ -27,8 +30,20 @@ public class SignUpActivity extends AppCompatActivity {
     FButton btnSignUp ;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fs.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         setContentView(R.layout.activity_sign_up);
 
         db_user = FirebaseDatabase.getInstance().getReference("User");
@@ -39,13 +54,13 @@ public class SignUpActivity extends AppCompatActivity {
         final String phone = edtPhone.getText().toString().trim();
         final String name = edtName.getText().toString().trim();
         final String pass = edtPass.getText().toString().trim();
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                SignIn_DAL.signUp(dialog, getApplicationContext(), phone, pass, name, intent);
-            }
-        });
+//        btnSignUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+//                SignIn_DAL.signUp(dialog, getApplicationContext(), phone, pass, name, intent);
+//            }
+//        });
 
     }
 

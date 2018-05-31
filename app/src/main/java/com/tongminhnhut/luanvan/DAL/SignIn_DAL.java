@@ -29,7 +29,7 @@ public class SignIn_DAL {
 
 
     public static void signIn(final AlertDialog dialog, final Context context, final String phone, final String pass, final Intent intent){
-        dialog.show();
+//        dialog.show();
         db_User.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -37,7 +37,7 @@ public class SignIn_DAL {
                     User user = dataSnapshot.child(phone).getValue(User.class);
                     user.setPhone(phone);
                     if (user.getPassword().equals(MD5.md5(pass))){
-                        dialog.dismiss();
+//                        dialog.dismiss();
 //                        Intent intent = new Intent(context, HomeActivity.class);
                         intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                         curentUser = user;

@@ -19,6 +19,9 @@ android {
 }
 
 dependencies {
+    //button tang - giam
+    compile 'com.cepheuen.elegant-number-button:lib:1.0.2'
+
     // editText
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     // flat button

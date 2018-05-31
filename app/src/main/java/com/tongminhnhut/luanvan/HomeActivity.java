@@ -1,5 +1,6 @@
 package com.tongminhnhut.luanvan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,6 +47,9 @@ import com.tongminhnhut.luanvan.ViewHolder.MenuViewHolder;
 
 import java.util.HashMap;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView txtFullname ;
@@ -60,8 +64,20 @@ public class HomeActivity extends AppCompatActivity
     SliderLayout sliderLayout ;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fs.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Watch Store");
@@ -101,7 +117,8 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 if (CheckConnection.isConnectedInternet(HomeActivity.this)){
-                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
+                    Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout, intent);
                 }else {
                     Toast.makeText(HomeActivity.this, "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();
                     return;
@@ -113,7 +130,8 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (CheckConnection.isConnectedInternet(HomeActivity.this)){
-                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
+                    Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+                    LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout, intent);
                 }else {
                     Toast.makeText(HomeActivity.this, "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();
                     return;
@@ -125,7 +143,8 @@ public class HomeActivity extends AppCompatActivity
 
 
         if (CheckConnection.isConnectedInternet(getApplicationContext())){
-            LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout);
+            Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+            LoadMenuDAL.loadMenu(recyclerView, getApplicationContext(), swipeRefreshLayout, intent);
             LoadMenuDAL.loadBanner(sliderLayout, getApplicationContext());
         }else Toast.makeText(this, "Vui lòng kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
 
