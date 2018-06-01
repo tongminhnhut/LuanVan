@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.DongHoActivity;
+import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.DongHo;
 import com.tongminhnhut.luanvan.R;
 import com.tongminhnhut.luanvan.ViewHolder.DongHoViewHolder;
@@ -30,12 +31,20 @@ public class LoadListDongHo extends DongHoActivity {
         FirebaseRecyclerOptions<DongHo> options = new FirebaseRecyclerOptions.Builder<DongHo>()
                 .setQuery(query, DongHo.class)
                 .build();
-        FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> adapter = new FirebaseRecyclerAdapter<DongHo, DongHoViewHolder>(options) {
+         adapter = new FirebaseRecyclerAdapter<DongHo, DongHoViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull DongHoViewHolder holder, int position, @NonNull DongHo model) {
                 holder.txtTen.setText(model.getName());
                 holder.txtGia.setText(model.getGia());
                 Picasso.with(context).load(model.getImage()).into(holder.imgHinh);
+                holder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        intent.putExtra("dongho", adapter.getRef(position).getKey());
+                        context.startActivity(intent);
+                    }
+                });
+
             }
 
             @Override

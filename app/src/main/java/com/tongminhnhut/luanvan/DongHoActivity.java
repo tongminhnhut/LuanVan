@@ -34,7 +34,6 @@ public class DongHoActivity extends AppCompatActivity {
     DatabaseReference db_DongHo ;
     String menuId ="";
     SwipeRefreshLayout swipeRefreshLayout;
-    FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> adapter;
 
 
     @Override
@@ -73,7 +72,7 @@ public class DongHoActivity extends AppCompatActivity {
                 if (getIntent() != null)
                     menuId = getIntent().getStringExtra("ID");
                 if (!menuId.isEmpty() && menuId!=null){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), DetailDongHoActivity.class);
                     LoadListDongHo.loadDongHo(menuId, recyclerView, getApplicationContext(),intent, swipeRefreshLayout);
                 }
             }
@@ -87,7 +86,7 @@ public class DongHoActivity extends AppCompatActivity {
                     menuId = getIntent().getStringExtra("ID");
                 if (!menuId.isEmpty() && menuId != null) {
                     if (CheckConnection.isConnectedInternet(getBaseContext())) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), DetailDongHoActivity.class);
                         LoadListDongHo.loadDongHo(menuId, recyclerView, getApplicationContext(), intent, swipeRefreshLayout);
                     } else {
                         Toast.makeText(getApplicationContext(), "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();

@@ -14,10 +14,11 @@ public class DongHoViewHolder extends RecyclerView.ViewHolder implements View.On
     public TextView txtGia, txtTen;
     public ImageView btnCart, imgHinh;
 
-    public DongHoViewHolder(View itemView, ItemClickListener itemClickListener) {
-        super(itemView);
-        this.itemClickListener = itemClickListener;
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener ;
     }
+
+
 
     public DongHoViewHolder(View itemView) {
         super(itemView);

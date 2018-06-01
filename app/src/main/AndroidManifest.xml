@@ -22,7 +22,8 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DongHoActivity"></activity>
+        <activity android:name=".DongHoActivity" />
+        <activity android:name=".DetailDongHoActivity"></activity>
     </application>
 
 </manifest>

@@ -8,6 +8,9 @@ public class DongHo {
     private String XuatXu;
     private String BaoHanh;
     private String Size;
+    private String ThuongHieu;
+    private String May;
+    private String DayDeo;
     private String MenuId;
     private String BrandId;
 
@@ -15,7 +18,7 @@ public class DongHo {
     public DongHo() {
     }
 
-    public DongHo(String name, String image, String gia, String discount, String xuatXu, String baoHanh, String size, String menuId, String brandId) {
+    public DongHo(String name, String image, String gia, String discount, String xuatXu, String baoHanh, String size, String thuongHieu, String may, String dayDeo, String menuId, String brandId) {
         Name = name;
         Image = image;
         Gia = gia;
@@ -23,6 +26,9 @@ public class DongHo {
         XuatXu = xuatXu;
         BaoHanh = baoHanh;
         Size = size;
+        ThuongHieu = thuongHieu;
+        May = may;
+        DayDeo = dayDeo;
         MenuId = menuId;
         BrandId = brandId;
     }
@@ -81,6 +87,30 @@ public class DongHo {
 
     public void setSize(String size) {
         Size = size;
+    }
+
+    public String getThuongHieu() {
+        return ThuongHieu;
+    }
+
+    public void setThuongHieu(String thuongHieu) {
+        ThuongHieu = thuongHieu;
+    }
+
+    public String getMay() {
+        return May;
+    }
+
+    public void setMay(String may) {
+        May = may;
+    }
+
+    public String getDayDeo() {
+        return DayDeo;
+    }
+
+    public void setDayDeo(String dayDeo) {
+        DayDeo = dayDeo;
     }
 
     public String getMenuId() {
