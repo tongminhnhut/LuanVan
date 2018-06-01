@@ -40,6 +40,7 @@ public class LoadListDongHo extends DongHoActivity {
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
+                        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("dongho", adapter.getRef(position).getKey());
                         context.startActivity(intent);
                     }

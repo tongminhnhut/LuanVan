@@ -23,7 +23,7 @@
             <ImageView
                 app:layout_collapseMode="parallax"
                 android:scaleType="centerCrop"
-                android:id="@+id/imgFoodDetail"
+                android:id="@+id/imgDongHo_DetailDongHo"
                 android:contentDescription="@null"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
