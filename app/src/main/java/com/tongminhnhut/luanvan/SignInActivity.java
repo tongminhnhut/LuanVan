@@ -23,6 +23,7 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 import info.hoang8f.widget.FButton;
+import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -43,11 +44,13 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set Default font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fs.ttf")
+                .setDefaultFontPath("VNFFutura.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
         setContentView(R.layout.activity_sign_in);
+
+        Paper.init(this);
 
         mData = FirebaseDatabase.getInstance();
         db_user = mData.getReference("User");

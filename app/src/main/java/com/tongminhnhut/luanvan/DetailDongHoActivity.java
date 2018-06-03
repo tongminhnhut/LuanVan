@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
+import com.tongminhnhut.luanvan.DAL.Database;
 import com.tongminhnhut.luanvan.Model.DongHo;
+import com.tongminhnhut.luanvan.Model.Order;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -43,7 +46,7 @@ public class DetailDongHoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set Default font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fs.ttf")
+                .setDefaultFontPath("VNFFutura.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
@@ -63,6 +66,21 @@ public class DetailDongHoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Vui long kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
             }
         }
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Database(getApplicationContext()).addCarts(new Order(
+                        idDongHo,
+                        dongHo.getName(),
+                        numberButton.getNumber(),
+                        dongHo.getGia(),
+                        dongHo.getDiscount()
+
+                ));
+                Toast.makeText(DetailDongHoActivity.this, "Add to Cart !", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

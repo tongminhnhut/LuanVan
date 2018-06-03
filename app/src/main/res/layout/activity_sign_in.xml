@@ -16,6 +16,7 @@
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:inputType="number"
             android:text="0986843243"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"

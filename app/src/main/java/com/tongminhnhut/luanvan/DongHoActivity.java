@@ -46,7 +46,7 @@ public class DongHoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set Default font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fs.ttf")
+                .setDefaultFontPath("VNFFutura.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

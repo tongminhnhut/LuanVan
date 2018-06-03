@@ -23,7 +23,8 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".DongHoActivity" />
-        <activity android:name=".DetailDongHoActivity"></activity>
+        <activity android:name=".DetailDongHoActivity" />
+        <activity android:name=".CartActivity"></activity>
     </application>
 
 </manifest>

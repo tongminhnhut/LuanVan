@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_thuonghieu"
-            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:icon="@drawable/ic_watch_black_24dp"
             android:title="Thương hiệu " />
         <item
             android:id="@+id/nav_thongtin"
@@ -20,6 +20,10 @@
             android:id="@+id/nav_tintuc"
             android:icon="@drawable/ic_language_black_24dp"
             android:title="Tin tức " />
+        <item
+            android:id="@+id/nav_dangxuat"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Đăng xuất " />
 
     </group>
 

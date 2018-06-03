@@ -19,8 +19,13 @@ android {
 }
 
 dependencies {
+    //sqlite database helper
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    //paper
+    implementation 'io.paperdb:paperdb:2.6'
     //button tang - giam
-    compile 'com.cepheuen.elegant-number-button:lib:1.0.2'
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 
     // editText
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

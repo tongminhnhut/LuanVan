@@ -47,6 +47,7 @@ import com.tongminhnhut.luanvan.ViewHolder.MenuViewHolder;
 
 import java.util.HashMap;
 
+import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -56,11 +57,9 @@ public class HomeActivity extends AppCompatActivity
     RecyclerView recyclerView ;
     RecyclerView.LayoutManager layoutManager ;
     DatabaseReference db_Category ;
-    FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter ;
 
     SwipeRefreshLayout swipeRefreshLayout ;
 
-    HashMap<String, String> list_image ;
     SliderLayout sliderLayout ;
 
     @Override
@@ -73,12 +72,15 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         //set Default font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fs.ttf")
+                .setDefaultFontPath("VNFFutura.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
 
         setContentView(R.layout.activity_home);
+
+        Paper.init(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Watch Store");
         setSupportActionBar(toolbar);
@@ -93,8 +95,6 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //init firebase
-        db_Category = FirebaseDatabase.getInstance().getReference("Catergory");
 
         recyclerView = findViewById(R.id.recyler_menu);
         recyclerView.setHasFixedSize(true);
@@ -198,6 +198,11 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_tintuc) {
 
+        }else if (id==R.id.nav_dangxuat){
+            Paper.book().destroy();
+            Intent logoutItent = new Intent(getApplicationContext(), SignInActivity.class);
+            logoutItent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(logoutItent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
