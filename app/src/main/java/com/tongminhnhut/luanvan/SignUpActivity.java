@@ -103,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                                 intent.putExtra("Sign", edtPhone.getText().toString());
                                 intent.putExtra("SignIn", edtPass.getText().toString());
-                                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 Toast.makeText(SignUpActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                                 finish();

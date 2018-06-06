@@ -75,7 +75,8 @@ public class DetailDongHoActivity extends AppCompatActivity {
                         dongHo.getName(),
                         numberButton.getNumber(),
                         dongHo.getGia(),
-                        dongHo.getDiscount()
+                        dongHo.getDiscount(),
+                        dongHo.getImage()
 
                 ));
                 Toast.makeText(DetailDongHoActivity.this, "Add to Cart !", Toast.LENGTH_SHORT).show();

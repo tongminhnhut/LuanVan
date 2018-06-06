@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andremion.counterfab.CounterFab;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -38,6 +39,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
+import com.tongminhnhut.luanvan.DAL.Database;
 import com.tongminhnhut.luanvan.DAL.LoadMenuDAL;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
@@ -61,6 +63,7 @@ public class HomeActivity extends AppCompatActivity
     SwipeRefreshLayout swipeRefreshLayout ;
 
     SliderLayout sliderLayout ;
+    CounterFab btnCart;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -148,9 +151,22 @@ public class HomeActivity extends AppCompatActivity
             LoadMenuDAL.loadBanner(sliderLayout, getApplicationContext());
         }else Toast.makeText(this, "Vui lòng kiểm tra kết nối !", Toast.LENGTH_SHORT).show();
 
+
+        btnCart = findViewById(R.id.btnCart_Home);
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
+            }
+        });
+        btnCart.setCount(new Database(this).getCountCart());
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btnCart.setCount(new Database(this).getCountCart());
+    }
 
     @Override
     public void onBackPressed() {
@@ -203,6 +219,7 @@ public class HomeActivity extends AppCompatActivity
             Intent logoutItent = new Intent(getApplicationContext(), SignInActivity.class);
             logoutItent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutItent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -94,7 +94,8 @@ public class SignInActivity extends AppCompatActivity {
     private void login(AlertDialog dialog, final String phone, final String pass) {
         if (CheckConnection.isConnectedInternet(getApplicationContext())){
             Intent intent1 = new Intent(getApplicationContext(), HomeActivity.class);
-            SignIn_DAL.signIn(dialog,getApplicationContext(),phone, pass,intent1 );
+            Intent main = new Intent(getApplicationContext(), SignInActivity.class);
+            SignIn_DAL.signIn(dialog,getApplicationContext(),phone, pass,intent1 , main);
             finish();
         }else {
             Toast.makeText(SignInActivity.this, "Kiem tra ket noi !", Toast.LENGTH_SHORT).show();

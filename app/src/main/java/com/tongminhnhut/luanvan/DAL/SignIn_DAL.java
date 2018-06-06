@@ -28,8 +28,8 @@ public class SignIn_DAL {
     static DatabaseReference db_User = FirebaseDatabase.getInstance().getReference("User");
 
 
-    public static void signIn(final AlertDialog dialog, final Context context, final String phone, final String pass, final Intent intent){
-//        dialog.show();
+    public static void signIn(final AlertDialog dialog, final Context context, final String phone, final String pass, final Intent intent, final Intent main){
+        dialog.show();
         db_User.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -37,13 +37,16 @@ public class SignIn_DAL {
                     User user = dataSnapshot.child(phone).getValue(User.class);
                     user.setPhone(phone);
                     if (user.getPassword().equals(MD5.md5(pass))){
-//                        dialog.dismiss();
+                        dialog.dismiss();
 //                        Intent intent = new Intent(context, HomeActivity.class);
                         intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                         curentUser = user;
                         context.startActivity(intent);
                         Toast.makeText(context, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
-                    } else Toast.makeText(context, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+                    } else {
+                        context.startActivity(main);
+                        Toast.makeText(context, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
                     Toast.makeText(context, "Tài khoản không tồn tại !", Toast.LENGTH_SHORT).show();
                 }
