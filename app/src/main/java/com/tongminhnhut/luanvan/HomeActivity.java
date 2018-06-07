@@ -220,6 +220,9 @@ public class HomeActivity extends AppCompatActivity
             logoutItent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutItent);
             finish();
+        }else if (id == R.id.nav_status) {
+            startActivity(new Intent(getApplicationContext(), OrderStatusActivity.class));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

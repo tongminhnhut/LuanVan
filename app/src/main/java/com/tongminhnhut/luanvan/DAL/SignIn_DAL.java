@@ -29,7 +29,7 @@ public class SignIn_DAL {
 
 
     public static void signIn(final AlertDialog dialog, final Context context, final String phone, final String pass, final Intent intent, final Intent main){
-        dialog.show();
+//        dialog.show();
         db_User.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

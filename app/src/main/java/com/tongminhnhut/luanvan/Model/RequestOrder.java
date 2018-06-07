@@ -3,60 +3,70 @@ package com.tongminhnhut.luanvan.Model;
 import java.util.List;
 
 public class RequestOrder {
-    private String phone ;
-    private String name;
-    private String address;
-    private String total;
-    private List<Order> orderList;
+    private String Phone ;
+    private String Name;
+    private String Address;
+    private String Total;
+    private String Status;
+    private List<Order> OrderList;
 
     public RequestOrder() {
     }
 
     public RequestOrder(String phone, String name, String address, String total, List<Order> orderList) {
-        this.phone = phone;
-        this.name = name;
-        this.address = address;
-        this.total = total;
-        this.orderList = orderList;
+        Phone = phone;
+        Name = name;
+        Address = address;
+        Total = total;
+        OrderList = orderList;
+        Status ="0";
     }
 
     public String getPhone() {
-        return phone;
+        return Phone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        Phone = phone;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        Address = address;
     }
 
     public String getTotal() {
-        return total;
+        return Total;
     }
 
     public void setTotal(String total) {
-        this.total = total;
+        Total = total;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public List<Order> getOrderList() {
-        return orderList;
+        return OrderList;
     }
 
     public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+        OrderList = orderList;
     }
 }
