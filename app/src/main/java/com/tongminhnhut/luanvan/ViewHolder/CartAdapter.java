@@ -100,9 +100,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
                     total+=(Integer.parseInt(order.getPrice())*Integer.parseInt(item.getQuantity()));
                 }
 
-                Locale locale = new Locale("vn", "VN");
-                NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
-                cartActivity.txtTotal.setText(fm.format(total));
+//                Locale locale = new Locale("vn", "VN");
+//                NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
+                DecimalFormat fm = new DecimalFormat("#,###,###");
+                cartActivity.txtTotal.setText(fm.format(total)+" VNĐ");
             }
         });
 
