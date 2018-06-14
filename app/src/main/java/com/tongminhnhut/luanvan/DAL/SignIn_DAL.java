@@ -60,29 +60,5 @@ public class SignIn_DAL {
 
     }
 
-    public static void signUp (final AlertDialog dialog, final Context context, final String phone, final String pass, final String name, final Intent intent){
-        dialog.show();
-        db_User.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(phone).exists()){
-                    dialog.dismiss();
-                    Toast.makeText(context, "Tài khoản đã tồn tại !", Toast.LENGTH_SHORT).show();
-                }else {
-                    dialog.dismiss();
-                    User user = new User(name, MD5.md5(pass));
-                    db_User.child(phone).setValue(user);
-                    intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                    Toast.makeText(context, "Đăng ký thành công !", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 }

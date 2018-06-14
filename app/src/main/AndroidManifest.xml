@@ -25,7 +25,12 @@
         <activity android:name=".DongHoActivity" />
         <activity android:name=".DetailDongHoActivity" />
         <activity android:name=".CartActivity" />
-        <activity android:name=".OrderStatusActivity"></activity>
+        <activity android:name=".OrderStatusActivity" />
+
+        <service
+            android:name=".Service.ListenOrder"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

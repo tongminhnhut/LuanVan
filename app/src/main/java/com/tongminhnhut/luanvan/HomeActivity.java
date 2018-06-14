@@ -45,6 +45,7 @@ import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.Banner;
 import com.tongminhnhut.luanvan.Model.Category;
+import com.tongminhnhut.luanvan.Service.ListenOrder;
 import com.tongminhnhut.luanvan.ViewHolder.MenuViewHolder;
 
 import java.util.HashMap;
@@ -160,6 +161,10 @@ public class HomeActivity extends AppCompatActivity
             }
         });
         btnCart.setCount(new Database(this).getCountCart());
+
+        //register Service
+        Intent intent = new Intent(getApplicationContext(), ListenOrder.class);
+        startService(intent);
     }
 
     @Override

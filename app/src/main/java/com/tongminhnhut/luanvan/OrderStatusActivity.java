@@ -53,7 +53,13 @@ public class OrderStatusActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 if (CheckConnection.isConnectedInternet(getApplicationContext())){
+//                    if (getIntent() == null){
+//                        LoadOrderStatus.loadDonHang(SignIn_DAL.curentUser.getPhone(), recyclerView, swipeRefreshLayout);
+//                    }else {
+//                        LoadOrderStatus.loadDonHang(getIntent().getStringExtra("userPhone"), recyclerView, swipeRefreshLayout);
+//                    }
                     LoadOrderStatus.loadDonHang(SignIn_DAL.curentUser.getPhone(), recyclerView, swipeRefreshLayout);
+
                 } else Toast.makeText(getApplicationContext(), "Vui lòng kiểm tra kết nối", Toast.LENGTH_SHORT).show();
             }
         });
@@ -64,6 +70,7 @@ public class OrderStatusActivity extends AppCompatActivity {
             public void run() {
                 if (CheckConnection.isConnectedInternet(getApplicationContext())){
                     LoadOrderStatus.loadDonHang(SignIn_DAL.curentUser.getPhone(), recyclerView, swipeRefreshLayout);
+
                 } else Toast.makeText(getApplicationContext(), "Vui lòng kiểm tra kết nối", Toast.LENGTH_SHORT).show();
             }
         });
