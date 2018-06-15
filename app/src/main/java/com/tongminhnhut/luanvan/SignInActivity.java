@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rey.material.widget.CheckBox;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
 import com.tongminhnhut.luanvan.BLL.MD5;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
@@ -32,6 +33,7 @@ public class SignInActivity extends AppCompatActivity {
     DatabaseReference db_user ;
     FButton btnSignIn;
     EditText edtPhone, edtPass ;
+    CheckBox cb ;
 
 
     @Override
@@ -73,7 +75,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String phone = edtPhone.getText().toString();
-                final AlertDialog dialog = new SpotsDialog(SignInActivity.this, "Loading . . .");
+                final SpotsDialog dialog = new SpotsDialog(SignInActivity.this, "Loading . . .");
                 String pass = edtPass.getText().toString();
                 if (phone.isEmpty()&&pass.isEmpty()){
                     Toast.makeText(SignInActivity.this, "Vui lòng nhập đầy đủ !", Toast.LENGTH_SHORT).show();
@@ -89,10 +91,16 @@ public class SignInActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn_SignIn);
         edtPhone = findViewById(R.id.edtPhonenumber_SignIp);
         edtPass = findViewById(R.id.edtPass_SignIp);
+        cb = findViewById(R.id.cbRemember);
     }
 
-    private void login(AlertDialog dialog, final String phone, final String pass) {
+    private void login(SpotsDialog dialog, final String phone, final String pass) {
         if (CheckConnection.isConnectedInternet(getApplicationContext())){
+            if (cb.isChecked()){
+                Paper.book().write(SignIn_DAL.USER_KEY, edtPhone.getText().toString());
+                Paper.book().write(SignIn_DAL.PWD_KEY, edtPass.getText().toString());
+
+            }
             Intent intent1 = new Intent(getApplicationContext(), HomeActivity.class);
             Intent main = new Intent(getApplicationContext(), SignInActivity.class);
             SignIn_DAL.signIn(dialog,getApplicationContext(),phone, pass,intent1 , main);

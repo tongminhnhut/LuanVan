@@ -25,6 +25,8 @@ import dmax.dialog.SpotsDialog;
 
 public class SignIn_DAL {
     public static User curentUser ;
+    public static final String USER_KEY = "User";
+    public static final String PWD_KEY = "Password";
     static DatabaseReference db_User = FirebaseDatabase.getInstance().getReference("User");
 
 
