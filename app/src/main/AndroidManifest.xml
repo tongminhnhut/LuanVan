@@ -27,10 +27,18 @@
         <activity android:name=".CartActivity" />
         <activity android:name=".OrderStatusActivity" />
 
-        <service
-            android:name=".Service.ListenOrder"
-            android:enabled="true"
-            android:exported="true"></service>
+        <service android:name=".Service.MyFirebaseIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"></action>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Service.MyFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
