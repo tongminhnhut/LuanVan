@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,6 +67,7 @@ public class CartActivity extends AppCompatActivity {
 
     APIService mService ;
     EditText edtAddress, edtCmt;
+    Place shipAddress ;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -115,9 +120,23 @@ public class CartActivity extends AppCompatActivity {
         View view = inflater.inflate(R.layout.dialog_addcart, null);
         alertDialog.setView(view);
 
-        edtAddress = view.findViewById(R.id.edtAddress_dialogCart);
+        PlaceAutocompleteFragment edtAddress = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.fragment_address);
+//        edtAddress = view.findViewById(R.id.edtAddress_dialogCart);
         edtCmt =view.findViewById(R.id.edtComment_dialogCart);
+        edtAddress.getView().findViewById(R.id.place_autocomplete_search_button).setVisibility(View.GONE);
+        ((EditText)edtAddress.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("Enter your address");
+        ((EditText)edtAddress.getView().findViewById(R.id.place_autocomplete_search_input)).setTextSize(14);
+        edtAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                shipAddress = place;
+            }
 
+            @Override
+            public void onError(Status status) {
+                Log.e("ERROR", status.getStatusMessage());
+            }
+        });
         alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
@@ -125,9 +144,10 @@ public class CartActivity extends AppCompatActivity {
                 RequestOrder requestOrder = new RequestOrder(
                         SignIn_DAL.curentUser.getPhone(),
                         SignIn_DAL.curentUser.getName(),
-                        edtAddress.getText().toString().trim(),
+                        shipAddress.getAddress().toString(),
                         txtTotal.getText().toString(),
                         edtCmt.getText().toString(),
+                        String.format("%s,%s",shipAddress.getLatLng().latitude,shipAddress.getLatLng().longitude),
                         listOrder
                 );
                 Date currentTime = Calendar.getInstance().getTime();

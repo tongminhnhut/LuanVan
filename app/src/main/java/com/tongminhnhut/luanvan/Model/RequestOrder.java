@@ -9,28 +9,39 @@ public class RequestOrder {
     private String Total;
     private String Status;
     private String Comment;
+    private String Latlng ;
     private List<Order> OrderList;
 
     public RequestOrder() {
     }
 
-//    public RequestOrder(String phone, String name, String address, String total, List<Order> orderList) {
+//    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
 //        Phone = phone;
 //        Name = name;
 //        Address = address;
 //        Total = total;
+//        Status = "0";
+//        Comment = comment;
 //        OrderList = orderList;
-//        Status ="0";
 //    }
 
-    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
+    public RequestOrder(String phone, String name, String address, String total, String comment, String latlng, List<Order> orderList) {
         Phone = phone;
         Name = name;
         Address = address;
         Total = total;
         Status = "0";
         Comment = comment;
+        Latlng = latlng;
         OrderList = orderList;
+    }
+
+    public String getLatlng() {
+        return Latlng;
+    }
+
+    public void setLatlng(String latlng) {
+        Latlng = latlng;
     }
 
     public String getComment() {

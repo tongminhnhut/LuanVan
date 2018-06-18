@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-//    implementation 'com.google.android.gms:play-services-places:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
     //retrofit
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

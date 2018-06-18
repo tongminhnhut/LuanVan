@@ -11,17 +11,11 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:textColorHint="@android:color/white"
-            android:paddingLeft="10dp"
-            android:id="@+id/edtAddress_dialogCart"
-            android:hint="Address"
+        <fragment
+            android:id="@+id/fragment_address"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_baseColor="@android:color/black"
-            app:met_floatingLabel="highlight"
-            app:met_primaryColor="@android:color/black"
-            app:met_singleLineEllipsis="true"/>
+            android:layout_height="wrap_content"/>
         <com.rengwuxian.materialedittext.MaterialEditText
             android:textColorHint="@android:color/white"
             android:paddingLeft="10dp"
@@ -33,5 +27,20 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@android:color/black"
             app:met_singleLineEllipsis="true"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:text="Địa chỉ hiện tại"
+                android:id="@+id/rbShipToAddress_dialogCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:text="Địa chỉ nhà "
+                android:id="@+id/rbHomeAddress_dialogCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
     </LinearLayout>
 </android.support.v7.widget.CardView>
