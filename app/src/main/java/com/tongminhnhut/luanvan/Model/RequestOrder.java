@@ -15,26 +15,26 @@ public class RequestOrder {
     public RequestOrder() {
     }
 
-//    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
-//        Phone = phone;
-//        Name = name;
-//        Address = address;
-//        Total = total;
-//        Status = "0";
-//        Comment = comment;
-//        OrderList = orderList;
-//    }
-
-    public RequestOrder(String phone, String name, String address, String total, String comment, String latlng, List<Order> orderList) {
+    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
         Phone = phone;
         Name = name;
         Address = address;
         Total = total;
         Status = "0";
         Comment = comment;
-        Latlng = latlng;
         OrderList = orderList;
     }
+
+//    public RequestOrder(String phone, String name, String address, String total, String comment, String latlng, List<Order> orderList) {
+//        Phone = phone;
+//        Name = name;
+//        Address = address;
+//        Total = total;
+//        Status = "0";
+//        Comment = comment;
+//        Latlng = latlng;
+//        OrderList = orderList;
+//    }
 
     public String getLatlng() {
         return Latlng;

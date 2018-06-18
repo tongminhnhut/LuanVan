@@ -16,6 +16,7 @@
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
         <com.rengwuxian.materialedittext.MaterialEditText
             android:textColorHint="@android:color/white"
             android:paddingLeft="10dp"
