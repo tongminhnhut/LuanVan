@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter adapter ;
 
     APIService mService ;
+    EditText edtAddress, edtCmt;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -109,12 +111,13 @@ public class CartActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Điền thông tin !");
         alertDialog.setMessage("Địa chỉ giao hàng: ");
-        final EditText edtAdress = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        edtAdress.setLayoutParams(lp);
-        alertDialog.setView(edtAdress);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_addcart, null);
+        alertDialog.setView(view);
+
+        edtAddress = view.findViewById(R.id.edtAddress_dialogCart);
+        edtCmt =view.findViewById(R.id.edtComment_dialogCart);
+
         alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
@@ -122,8 +125,9 @@ public class CartActivity extends AppCompatActivity {
                 RequestOrder requestOrder = new RequestOrder(
                         SignIn_DAL.curentUser.getPhone(),
                         SignIn_DAL.curentUser.getName(),
-                        edtAdress.getText().toString().trim(),
+                        edtAddress.getText().toString().trim(),
                         txtTotal.getText().toString(),
+                        edtCmt.getText().toString(),
                         listOrder
                 );
                 Date currentTime = Calendar.getInstance().getTime();
