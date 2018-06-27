@@ -1,11 +1,14 @@
 package com.tongminhnhut.luanvan;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +48,7 @@ public class HomeActivity extends AppCompatActivity
 
     SliderLayout sliderLayout ;
     CounterFab btnCart;
+    EditText edtHomeAddress;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -199,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_thuonghieu) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_baohanh) {
 
         } else if (id == R.id.nav_thongtin) {
@@ -215,11 +220,44 @@ public class HomeActivity extends AppCompatActivity
         }else if (id == R.id.nav_status) {
             startActivity(new Intent(getApplicationContext(), OrderStatusActivity.class));
 
+        }else if (id == R.id.nav_home_address) {
+            showDialogHomeAddress();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showDialogHomeAddress() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Cập nhật địa chỉ nhà");
+        alertDialog.setMessage("Điền vào địa chỉ nhà");
+        alertDialog.setIcon(R.drawable.ic_home_black_24dp);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_home_address, null);
+        alertDialog.setView(view);
+
+        edtHomeAddress = view.findViewById(R.id.edtHomeAddress_dialogHomeAddress);
+
+        alertDialog.setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                SignIn_DAL.curentUser.setHomeAddress(edtHomeAddress.getText().toString());
+                SignIn_DAL.updateHomeAddress(getApplicationContext());
+            }
+        });
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
     }
 
 }

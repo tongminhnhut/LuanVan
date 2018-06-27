@@ -1,6 +1,5 @@
 package com.tongminhnhut.luanvan;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.CheckBox;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
-import com.tongminhnhut.luanvan.BLL.MD5;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
-import com.tongminhnhut.luanvan.Model.User;
-
-import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 import info.hoang8f.widget.FButton;

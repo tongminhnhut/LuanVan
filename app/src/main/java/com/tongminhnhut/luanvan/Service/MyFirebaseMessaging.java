@@ -13,6 +13,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.tongminhnhut.luanvan.MainActivity;
 import com.tongminhnhut.luanvan.R;
 
+import java.util.Random;
+
 public class MyFirebaseMessaging extends FirebaseMessagingService {
 
     @Override

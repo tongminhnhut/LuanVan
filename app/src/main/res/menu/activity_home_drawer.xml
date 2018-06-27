@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_watch_black_24dp"
             android:title="Thương hiệu " />
         <item
+            android:id="@+id/nav_home_address"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Địa chỉ nhà" />
+        <item
             android:id="@+id/nav_status"
             android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="Đơn hàng đã đặt " />

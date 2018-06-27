@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +63,17 @@ public class SignIn_DAL {
             }
         });
 
+    }
+
+    public static void updateHomeAddress(final Context context){
+        db_User.child(curentUser.getPhone())
+                .setValue(curentUser)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 

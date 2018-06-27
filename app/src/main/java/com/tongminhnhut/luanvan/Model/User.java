@@ -5,6 +5,7 @@ public class User {
     private String Password ;
     private String Phone ;
     private String IsStaff ;
+    private String HomeAddress;
 
     public User() {
     }
@@ -14,6 +15,14 @@ public class User {
         Name = name;
         Password = password;
         IsStaff = "false";
+    }
+
+    public String getHomeAddress() {
+        return HomeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        HomeAddress = homeAddress;
     }
 
     public String getName() {

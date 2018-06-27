@@ -225,6 +225,22 @@ GoogleApiClient.OnConnectionFailedListener,
         final RadioButton rbShiptoAddress = view.findViewById(R.id.rbShipToAddress_dialogCart);
         final RadioButton rbHomeAddress = view.findViewById(R.id.rbHomeAddress_dialogCart);
 
+        rbHomeAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    if (SignIn_DAL.curentUser.getHomeAddress() != null ||!TextUtils.isEmpty(SignIn_DAL.curentUser.getHomeAddress())) {
+                        address = SignIn_DAL.curentUser.getHomeAddress();
+                        ((EditText)edtAddress.getView().findViewById(R.id.place_autocomplete_search_input)).setText(address);
+                    }
+                    else{
+                        Toast.makeText(CartActivity.this, "Vui lòng nhập cập địa chỉ trong thông tin HOME", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
+
         rbShiptoAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
