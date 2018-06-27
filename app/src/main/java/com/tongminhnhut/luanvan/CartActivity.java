@@ -225,6 +225,9 @@ GoogleApiClient.OnConnectionFailedListener,
         final RadioButton rbShiptoAddress = view.findViewById(R.id.rbShipToAddress_dialogCart);
         final RadioButton rbHomeAddress = view.findViewById(R.id.rbHomeAddress_dialogCart);
 
+        final RadioButton rbCOD = view.findViewById(R.id.rbCOD_dialogCart);
+        final RadioButton rbPaypal = view.findViewById(R.id.rbPaypal_dialogCart);
+
         rbHomeAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -275,6 +278,8 @@ GoogleApiClient.OnConnectionFailedListener,
             }
         });
 
+
+
         edtAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -300,10 +305,10 @@ GoogleApiClient.OnConnectionFailedListener,
 //                        address = txtAddress.getText().toString();
                     } else {
                         Toast.makeText(CartActivity.this, "Vui lòng nhập địa chỉ hoặc chọn option", Toast.LENGTH_SHORT).show();
-//                        getFragmentManager().beginTransaction()
-//                                .remove(getFragmentManager().findFragmentById(R.id.fragment_address))
-//                                .commit();
-//                        return;
+                        getFragmentManager().beginTransaction()
+                                .remove(getFragmentManager().findFragmentById(R.id.fragment_address))
+                                .commit();
+                        return;
                     }
                 }
 //
@@ -314,27 +319,41 @@ GoogleApiClient.OnConnectionFailedListener,
 ////                                .commit();
 ////                        return;
 //                    }
+                if (!rbCOD.isChecked() && !rbPaypal.isChecked()){
+                    Toast.makeText(CartActivity.this, "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
+                    getFragmentManager().beginTransaction()
+                            .remove(getFragmentManager().findFragmentById(R.id.fragment_address))
+                            .commit();
+                    return;
+                }
+                else if (rbPaypal.isChecked()){
+                    Toast.makeText(CartActivity.this, "Sẽ cập nhật sau. Mong quý khách thông cảm", Toast.LENGTH_LONG).show();
+                }
+                else if (rbCOD.isChecked()) {
 
-                RequestOrder requestOrder = new RequestOrder(
-                                SignIn_DAL.curentUser.getPhone(),
-                                SignIn_DAL.curentUser.getName(),
-                                address,
-                                txtTotal.getText().toString(),
-                                edtCmt.getText().toString(),
+
+                    RequestOrder requestOrder = new RequestOrder(
+                            SignIn_DAL.curentUser.getPhone(),
+                            SignIn_DAL.curentUser.getName(),
+                            address,
+                            txtTotal.getText().toString(),
+                            edtCmt.getText().toString(),
+                            "COD",
 //                                String.format("%s,%s", shipAddress.getLatLng().latitude, shipAddress.getLatLng().longitude),
 //                                "1",
-                                listOrder
-                        );
-                        Date currentTime = Calendar.getInstance().getTime();
-                        SimpleDateFormat fm = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                        db_Request.child(String.valueOf(fm.format(currentTime))).setValue(requestOrder);
-                        //delete cart (Database SQLite)
-                        new Database(getApplicationContext()).cleanCart();
-                        sendNotification(fm.format(currentTime));
+                            listOrder
+                    );
+                    Date currentTime = Calendar.getInstance().getTime();
+                    SimpleDateFormat fm = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    db_Request.child(String.valueOf(fm.format(currentTime))).setValue(requestOrder);
+                    //delete cart (Database SQLite)
+                    new Database(getApplicationContext()).cleanCart();
+                    sendNotification(fm.format(currentTime));
 
-                getFragmentManager().beginTransaction()
-                        .remove(getFragmentManager().findFragmentById(R.id.fragment_address))
-                        .commit();
+                    getFragmentManager().beginTransaction()
+                            .remove(getFragmentManager().findFragmentById(R.id.fragment_address))
+                            .commit();
+                }
 
 
             }

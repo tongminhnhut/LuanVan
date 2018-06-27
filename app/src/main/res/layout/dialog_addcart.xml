@@ -28,6 +28,13 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@android:color/black"
             app:met_singleLineEllipsis="true"/>
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Phương thức vận chuyển:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -39,6 +46,28 @@
             <RadioButton
                 android:text="Địa chỉ nhà "
                 android:id="@+id/rbHomeAddress_dialogCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Phương thức thanh toán:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:text="Cash Only Delivery (COD)"
+                android:id="@+id/rbCOD_dialogCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:text="Paypal"
+                android:id="@+id/rbPaypal_dialogCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

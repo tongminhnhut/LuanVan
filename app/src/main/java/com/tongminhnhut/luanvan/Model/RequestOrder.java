@@ -9,39 +9,39 @@ public class RequestOrder {
     private String Total;
     private String Status;
     private String Comment;
-    private String Latlng ;
+    private String PaymentMethod;
     private List<Order> OrderList;
 
     public RequestOrder() {
     }
 
-    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
-        Phone = phone;
-        Name = name;
-        Address = address;
-        Total = total;
-        Status = "0";
-        Comment = comment;
-        OrderList = orderList;
-    }
-
-//    public RequestOrder(String phone, String name, String address, String total, String comment, String latlng, List<Order> orderList) {
+//    public RequestOrder(String phone, String name, String address, String total, String comment, List<Order> orderList) {
 //        Phone = phone;
 //        Name = name;
 //        Address = address;
 //        Total = total;
 //        Status = "0";
 //        Comment = comment;
-//        Latlng = latlng;
 //        OrderList = orderList;
 //    }
 
-    public String getLatlng() {
-        return Latlng;
+    public RequestOrder(String phone, String name, String address, String total, String comment, String paymentMethod, List<Order> orderList) {
+        Phone = phone;
+        Name = name;
+        Address = address;
+        Total = total;
+        Status = "0";
+        Comment = comment;
+        PaymentMethod = paymentMethod;
+        OrderList = orderList;
     }
 
-    public void setLatlng(String latlng) {
-        Latlng = latlng;
+    public String getPaymentMethod() {
+        return PaymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        PaymentMethod = paymentMethod;
     }
 
     public String getComment() {
