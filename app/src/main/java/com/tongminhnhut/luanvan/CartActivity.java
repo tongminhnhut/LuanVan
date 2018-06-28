@@ -58,6 +58,7 @@ import com.tongminhnhut.luanvan.Model.Token;
 import com.tongminhnhut.luanvan.Remote.APIService;
 import com.tongminhnhut.luanvan.Remote.IGoogleService;
 import com.tongminhnhut.luanvan.ViewHolder.CartAdapter;
+import com.tongminhnhut.luanvan.ViewHolder.ShowCartAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,6 +90,7 @@ GoogleApiClient.OnConnectionFailedListener,
     List<Order> listOrder = new ArrayList<>();
 
     CartAdapter adapter ;
+    ShowCartAdapter showCartAdapter;
 
     APIService mService ;
     EditText edtAddress, edtCmt;
@@ -201,9 +203,49 @@ GoogleApiClient.OnConnectionFailedListener,
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                showRequestOrderDialog();
+                showDialogShowCart();
+            }
+        });
+    }
+
+    private void showDialogShowCart() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Đơn hàng của bạn");
+        alertDialog.setMessage("Chọn NEXT để tiến hành thanh toán");
+        alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_show_cart, null);
+        alertDialog.setView(view);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerVire_DialogShowCart);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        listOrder = new Database(this).getCart();
+        showCartAdapter = new ShowCartAdapter(listOrder, this);
+        recyclerView.setAdapter(adapter);
+
+        alertDialog.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 showRequestOrderDialog();
             }
         });
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
+
     }
 
     private void showRequestOrderDialog() {
