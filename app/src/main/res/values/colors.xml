@@ -8,4 +8,6 @@
     <color name="btnSignIn">#2E7D32</color>
     <color name="overlayBackground">#7f333639</color>
 
+    <color name="bgDelete">#941010</color>
+
 </resources>

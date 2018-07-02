@@ -6,15 +6,18 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +53,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.tongminhnhut.luanvan.BLL.Common;
 import com.tongminhnhut.luanvan.DAL.Database;
 import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
+import com.tongminhnhut.luanvan.Interface.RecyclerItemTouchHelper;
+import com.tongminhnhut.luanvan.Interface.RecyclerItemTouchHelperListener;
 import com.tongminhnhut.luanvan.Model.MyResponse;
 import com.tongminhnhut.luanvan.Model.Notification;
 import com.tongminhnhut.luanvan.Model.Order;
@@ -58,6 +64,7 @@ import com.tongminhnhut.luanvan.Model.Token;
 import com.tongminhnhut.luanvan.Remote.APIService;
 import com.tongminhnhut.luanvan.Remote.IGoogleService;
 import com.tongminhnhut.luanvan.ViewHolder.CartAdapter;
+import com.tongminhnhut.luanvan.ViewHolder.CartViewHolder;
 import com.tongminhnhut.luanvan.ViewHolder.ShowCartAdapter;
 
 import org.json.JSONArray;
@@ -81,7 +88,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CartActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener, RecyclerItemTouchHelperListener {
     RecyclerView recyclerView ;
     RecyclerView.LayoutManager layoutManager;
     DatabaseReference db_Request;
@@ -95,6 +102,7 @@ GoogleApiClient.OnConnectionFailedListener,
     APIService mService ;
     EditText edtAddress, edtCmt;
     Place shipAddress ;
+    RelativeLayout relativeLayout;
     //Location
     private Location mLastLocation ;
     private GoogleApiClient mGoogleApiClient ;
@@ -131,6 +139,8 @@ GoogleApiClient.OnConnectionFailedListener,
         //init Service
         mService = Common.getFCMService();
         iGoogleService = Common.getGoogleMapAPI();
+        relativeLayout = findViewById(R.id.layout_CartActivity);
+
 
 
 
@@ -157,6 +167,10 @@ GoogleApiClient.OnConnectionFailedListener,
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        //Swipe to delete
+        ItemTouchHelper.SimpleCallback itemTouchHelper = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
 
         txtTotal = findViewById(R.id.txtTotal_Cart);
         btnOrder = findViewById(R.id.btnOrder_Cart);
@@ -542,4 +556,47 @@ GoogleApiClient.OnConnectionFailedListener,
     }
 
 
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof CartViewHolder){
+            String name = ((CartAdapter)recyclerView.getAdapter()).getItem(viewHolder.getAdapterPosition()).getProductName();
+            final Order deleteItem = ((CartAdapter)recyclerView.getAdapter()).getItem(viewHolder.getAdapterPosition());
+
+            final int deleteIndex = viewHolder.getAdapterPosition();
+
+            adapter.removeItem(deleteIndex);
+            new Database(getBaseContext()).removeItemCart(deleteItem);
+
+            // Tính tông giá
+            int total = 0 ;
+            List<Order> orders = new Database(getBaseContext()).getCart(SignIn_DAL.curentUser.getPhone());
+            for (Order item:orders){
+                total += (Integer.parseInt(deleteItem.getPrice())) * (Integer.parseInt(item.getQuantity()));
+            }
+            Locale locale = new Locale("vn", "VN");
+            NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
+            txtTotal.setText(fm.format(total));
+
+            Snackbar snackBar = Snackbar.make(relativeLayout, name + " removed from Cart", Snackbar.LENGTH_LONG);
+            snackBar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.restoreItem(deleteItem,deleteIndex);
+                    new Database(getBaseContext()).addCarts(deleteItem);
+                    // Tính tông giá
+                    int total = 0 ;
+                    List<Order> orders = new Database(getBaseContext()).getCart(SignIn_DAL.curentUser.getPhone());
+                    for (Order item:orders){
+                        total += (Integer.parseInt(item.getPrice())) * (Integer.parseInt(item.getQuantity()));
+                    }
+                    Locale locale = new Locale("vn", "VN");
+                    NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
+                    txtTotal.setText(fm.format(total));
+
+                }
+            });
+            snackBar.setActionTextColor(Color.YELLOW);
+            snackBar.show();
+        }
+    }
 }

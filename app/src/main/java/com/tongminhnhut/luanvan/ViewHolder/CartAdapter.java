@@ -1,6 +1,5 @@
 package com.tongminhnhut.luanvan.ViewHolder;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.CartActivity;
@@ -17,47 +15,12 @@ import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.Order;
 import com.tongminhnhut.luanvan.R;
-
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class CartViewHolder extends RecyclerView.ViewHolder implements
-        View.OnClickListener,
-        View.OnCreateContextMenuListener
-{
 
-    public TextView txtTen, txtGia;
-    public ImageView imgDH;
-    public ElegantNumberButton btnCount ;
-
-    private ItemClickListener itemClickListener;
-
-    public CartViewHolder(View itemView) {
-        super(itemView);
-        txtTen = itemView.findViewById(R.id.txtTenDongHo_cartItem);
-        txtGia = itemView.findViewById(R.id.txtGia_cartItem);
-        imgDH = itemView.findViewById(R.id.img_cartItem);
-        btnCount = itemView.findViewById(R.id.btnCount_cartItem);
-//        itemView.setOnClickListener(this);
-        itemView.setOnCreateContextMenuListener(this);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-//        itemClickListener.onClick(v, getAdapterPosition(), false);
-
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Vui lòng chọn !");
-        menu.add(0,0,getAdapterPosition(),"Delete");
-    }
-}
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
     private List<Order> list = new ArrayList<>();
     private CartActivity cartActivity;
@@ -115,5 +78,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
         return list.size();
     }
 
+    public Order getItem (int position){
+        return list.get(position);
+    }
 
+    public void removeItem(int position){
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Order order,int position){
+        list.add(position,order);
+        notifyItemInserted(position);
+    }
 }
