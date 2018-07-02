@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), CartActivity.class));
             }
         });
-        btnCart.setCount(new Database(this).getCountCart());
+        btnCart.setCount(new Database(this).getCountCart(SignIn_DAL.curentUser.getPhone()));
 
 //        //register Service
 //        Intent intent = new Intent(getApplicationContext(), ListenOrder.class);
@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        btnCart.setCount(new Database(this).getCountCart());
+        btnCart.setCount(new Database(this).getCountCart(SignIn_DAL.curentUser.getPhone()));
     }
 
     @Override

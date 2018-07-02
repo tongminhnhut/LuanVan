@@ -225,7 +225,7 @@ GoogleApiClient.OnConnectionFailedListener,
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        listOrder = new Database(this).getCart();
+        listOrder = new Database(this).getCart(SignIn_DAL.curentUser.getPhone());
         showCartAdapter = new ShowCartAdapter(listOrder, this);
         recyclerView.setAdapter(adapter);
 
@@ -389,7 +389,7 @@ GoogleApiClient.OnConnectionFailedListener,
                     SimpleDateFormat fm = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     db_Request.child(String.valueOf(fm.format(currentTime))).setValue(requestOrder);
                     //delete cart (Database SQLite)
-                    new Database(getApplicationContext()).cleanCart();
+                    new Database(getApplicationContext()).cleanCart(SignIn_DAL.curentUser.getPhone());
                     sendNotification(fm.format(currentTime));
 
                     getFragmentManager().beginTransaction()
@@ -454,7 +454,7 @@ GoogleApiClient.OnConnectionFailedListener,
     }
 
     private void loadFood() {
-        listOrder = new Database(this).getCart();
+        listOrder = new Database(this).getCart(SignIn_DAL.curentUser.getPhone());
         adapter = new CartAdapter(listOrder, this);
         recyclerView.setAdapter(adapter);
 

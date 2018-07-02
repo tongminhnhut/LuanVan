@@ -13,6 +13,7 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.CartActivity;
 import com.tongminhnhut.luanvan.DAL.Database;
+import com.tongminhnhut.luanvan.DAL.SignIn_DAL;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.Order;
 import com.tongminhnhut.luanvan.R;
@@ -95,7 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
 
                 //total
                 int total = 0;
-                List<Order> orderList = new Database(cartActivity).getCart();
+                List<Order> orderList = new Database(cartActivity).getCart(SignIn_DAL.curentUser.getPhone());
                 for (Order item:orderList){
                     total+=(Integer.parseInt(order.getPrice())*Integer.parseInt(item.getQuantity()));
                 }

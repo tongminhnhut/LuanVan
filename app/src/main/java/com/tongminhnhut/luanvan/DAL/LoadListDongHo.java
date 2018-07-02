@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+import com.tongminhnhut.luanvan.BLL.Common;
 import com.tongminhnhut.luanvan.DetailDongHoActivity;
 import com.tongminhnhut.luanvan.DongHoActivity;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
@@ -49,21 +50,34 @@ public class LoadListDongHo extends DongHoActivity {
                     }
                 });
 
-                holder.btnCart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new Database(context).addCarts(new Order(
-                                adapter.getRef(position).getKey(),
-                                model.getName(),
-                                "1",
-                                model.getGia(),
-                                model.getDiscount(),
-                                model.getImage()
+                final boolean isExist = new Database(context).checkExistDongHo(
+                        adapter.getRef(position).getKey(),
+                        SignIn_DAL.curentUser.getPhone()
+                        );
 
-                        ));
-                        Toast.makeText(context, "Add to Cart !", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                    holder.btnCart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!isExist) {
+                            new Database(context).addCarts(new Order(
+                                    SignIn_DAL.curentUser.getPhone(),
+                                    adapter.getRef(position).getKey(),
+                                    model.getName(),
+                                    "1",
+                                    model.getGia(),
+                                    model.getDiscount(),
+                                    model.getImage()
+
+                            ));
+                            }else {
+                                new Database(context).increaseCart(adapter.getRef(position).getKey(),SignIn_DAL.curentUser.getPhone());
+                            }
+
+                            Toast.makeText(context, "Add to Cart !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
             }
 
