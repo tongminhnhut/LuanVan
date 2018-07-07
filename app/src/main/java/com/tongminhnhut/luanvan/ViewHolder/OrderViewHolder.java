@@ -2,6 +2,7 @@ package com.tongminhnhut.luanvan.ViewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
@@ -11,6 +12,7 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public TextView txtId, txtPhone, txtStatus, txtName, txtAddress ;
     private ItemClickListener itemClickListener;
+    public ImageView btnDelete ;
 
 
     public OrderViewHolder(View itemView) {
@@ -20,8 +22,9 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtStatus = itemView.findViewById(R.id.txtStatus_orderStatus);
         txtName = itemView.findViewById(R.id.txtName_orderStatus);
         txtAddress = itemView.findViewById(R.id.txtAddress_orderStatus);
+        btnDelete = itemView.findViewById(R.id.btnDelete_OrderStatus);
 
-        itemView.setOnClickListener(this);
+//        itemView.setOnClickListener(this);
 
     }
 
