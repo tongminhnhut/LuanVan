@@ -19,6 +19,8 @@ android {
 }
 
 dependencies {
+    //search bar
+    implementation 'com.github.mancj:MaterialSearchBar:0.7.6'
     //google api
     implementation 'com.google.android.gms:play-services-location:15.0.0'
     implementation 'com.google.android.gms:play-services-places:15.0.0'

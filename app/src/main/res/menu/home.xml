@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        app:showAsAction="always"
+        android:id="@+id/nav_timkiem"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Đơn hàng đã đặt " />
 </menu>

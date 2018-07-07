@@ -44,11 +44,12 @@ public class SignIn_DAL {
                     if (user.getPassword().equals(MD5.md5(pass))){
                         dialog.dismiss();
 //                        Intent intent = new Intent(context, HomeActivity.class);
-                        intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                         curentUser = user;
                         context.startActivity(intent);
                         Toast.makeText(context, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
                     } else {
+                        main.addFlags(main.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(main);
                         Toast.makeText(context, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
                     }

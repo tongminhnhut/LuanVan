@@ -5,6 +5,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,6 @@ public class DetailDongHoActivity extends AppCompatActivity {
     DatabaseReference db_DongHo;
     CollapsingToolbarLayout collapsingToolbarLayout ;
     ElegantNumberButton numberButton ;
-
     CounterFab btnCart ;
     DongHo dongHo ;
 
