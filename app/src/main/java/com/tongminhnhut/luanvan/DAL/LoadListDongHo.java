@@ -31,6 +31,8 @@ public class LoadListDongHo extends DongHoActivity {
     static DatabaseReference db_DongHo = FirebaseDatabase.getInstance().getReference("DongHo");
     public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> adapter ;
     public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> searchAdapter ;
+    public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> spinnerAdapter ;
+
 
 
     public static void loadDongHo(String Id, RecyclerView recyclerView, final Context context, final Intent intent, SwipeRefreshLayout swipeRefreshLayout){
@@ -93,6 +95,70 @@ public class LoadListDongHo extends DongHoActivity {
         };
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public static void loadDongHoByPrice(int Id, RecyclerView recyclerView, final Context context, final Intent intent, final SwipeRefreshLayout swipeRefreshLayout){
+        Query query = db_DongHo.orderByChild("menuId").equalTo("01");
+
+        FirebaseRecyclerOptions<DongHo> options = new FirebaseRecyclerOptions.Builder<DongHo>()
+                .setQuery(query, DongHo.class)
+                .build();
+        spinnerAdapter = new FirebaseRecyclerAdapter<DongHo, DongHoViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull DongHoViewHolder holder, final int position, @NonNull final DongHo model) {
+                holder.txtTen.setText(model.getName());
+                holder.txtGia.setText(model.getGia());
+                Picasso.with(context).load(model.getImage()).into(holder.imgHinh);
+                holder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("dongho", spinnerAdapter.getRef(position).getKey());
+                        context.startActivity(intent);
+                    }
+                });
+
+                final boolean isExist = new Database(context).checkExistDongHo(
+                        spinnerAdapter.getRef(position).getKey(),
+                        SignIn_DAL.curentUser.getPhone()
+                );
+
+
+                holder.btnCart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!isExist) {
+                            new Database(context).addCarts(new Order(
+                                    SignIn_DAL.curentUser.getPhone(),
+                                    spinnerAdapter.getRef(position).getKey(),
+                                    model.getName(),
+                                    "1",
+                                    model.getGia(),
+                                    model.getDiscount(),
+                                    model.getImage()
+
+                            ));
+                        }else {
+                            new Database(context).increaseCart(spinnerAdapter.getRef(position).getKey(),SignIn_DAL.curentUser.getPhone());
+                        }
+
+                        Toast.makeText(context, "Add to Cart !", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
+
+            @Override
+            public DongHoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dongho, parent, false);
+                return new DongHoViewHolder(view);
+            }
+        };
+        spinnerAdapter.startListening();
+        recyclerView.setAdapter(spinnerAdapter);
         recyclerView.getAdapter().notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -167,6 +233,9 @@ public class LoadListDongHo extends DongHoActivity {
         adapter.startListening();
         if (searchAdapter !=null){
             searchAdapter.stopListening();
+        }
+        else if (spinnerAdapter !=null){
+            spinnerAdapter.startListening();
         }
     }
 

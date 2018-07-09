@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import com.tongminhnhut.luanvan.BLL.CheckConnection;
 import com.tongminhnhut.luanvan.DAL.Database;
 import com.tongminhnhut.luanvan.DAL.LoadListDongHo;
+import com.tongminhnhut.luanvan.DAL.LoadPriceDongHo;
 import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.DongHo;
 import com.tongminhnhut.luanvan.ViewHolder.DongHoViewHolder;
@@ -49,7 +50,10 @@ public class SearchActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout ;
     DatabaseReference db_DongHo ;
     MaterialSpinner spPrice, spBrand ;
-    ArrayList<String> listPrice = new ArrayList<>();
+
+    List<String> listPrice = new ArrayList<>();
+    ArrayAdapter<String> adapterSpinner;
+
 
 
 
@@ -64,8 +68,7 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         materialSearchBar = findViewById(R.id.searchBar);
-        spPrice = findViewById(R.id.spinner_Price);
-        spBrand = findViewById(R.id.spinner_Brand);
+
 
         materialSearchBar.setHint("Enter your key");
         materialSearchBar.setCardViewElevation(10);
@@ -108,11 +111,63 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         loadList();
+        initSpinner();
         loadAllDongHo();
 
 
 
 
+    }
+
+    private void initSpinner() {
+        spPrice = findViewById(R.id.spinner_Price);
+        spBrand = findViewById(R.id.spinner_Brand);
+
+        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPrice);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listPrice.add("Dưới 1 triệu");
+        listPrice.add("Từ 2 triệu - 3 triệu");
+        listPrice.add("Từ 4 triệu - 6 triệu");
+        spPrice.setAdapter(adapterSpinner);
+
+        spPrice.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                final int index = spPrice.getSelectedIndex();
+//                    Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+//                    LoadListDongHo.loadDongHoByPrice(index, recyclerView, getApplicationContext(), intent);
+
+                    swipeRefreshLayout = findViewById(R.id.swipe_Search);
+                    swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                            android.R.color.holo_green_dark,
+                            android.R.color.holo_orange_dark,
+                            android.R.color.holo_blue_dark);
+                    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+                            LoadPriceDongHo.loadDongHoByPrice(index, recyclerView, getApplicationContext(), intent, swipeRefreshLayout);
+                        }
+                    });
+
+
+                    swipeRefreshLayout.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                                if (CheckConnection.isConnectedInternet(getBaseContext())) {
+                                    Intent intent = new Intent(getApplicationContext(), DongHoActivity.class);
+                                    LoadPriceDongHo.loadDongHoByPrice(index, recyclerView, getApplicationContext(), intent, swipeRefreshLayout);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Vui lòng kiểm tra internet", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+
+                        }
+                    });
+            }
+        });
     }
 
     private void loadAllDongHo() {

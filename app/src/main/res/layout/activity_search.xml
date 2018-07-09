@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/bgapp"
     android:layout_height="match_parent"
-    android:id="@+id/swipe_Search"
     tools:context=".SearchActivity">
 
     <LinearLayout
@@ -27,49 +27,55 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
-                    android:text="Giá: "
+                    android:text="Khoảng Giá: "
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <com.jaredrummler.materialspinner.MaterialSpinner
-                    app:ms_hint="Please Choose"
-                    app:ms_background_color="@color/overlayBackground"
-                    android:id="@+id/spinner_Price"
+                    android:layout_marginRight="8dp"
                     android:text="1.000.000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:text="Thương hiệu: "
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    app:ms_background_color="@color/overlayBackground"
-                    android:id="@+id/spinner_Brand"
-                    android:text="Rolex"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/spinner_Price"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:text="Thương hiệu: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                app:ms_background_color="@color/overlayBackground"
+                android:id="@+id/spinner_Brand"
+                android:text="Rolex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerVire_Search"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_Search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerVire_Search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 
     </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>
