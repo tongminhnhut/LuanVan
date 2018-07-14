@@ -206,6 +206,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_thuonghieu) {
 
         } else if (id == R.id.nav_baohanh) {
+            startActivity(new Intent(getApplicationContext(), BaoHanhActivity.class));
 
         } else if (id == R.id.nav_thongtin) {
             startActivity(new Intent(getApplicationContext(), ContactActivity.class));
