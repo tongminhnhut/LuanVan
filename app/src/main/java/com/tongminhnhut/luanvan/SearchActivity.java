@@ -49,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     SwipeRefreshLayout swipeRefreshLayout ;
     DatabaseReference db_DongHo ;
-    MaterialSpinner spPrice, spBrand ;
+    MaterialSpinner spPrice ;
 
     List<String> listPrice = new ArrayList<>();
     ArrayAdapter<String> adapterSpinner;
@@ -121,7 +121,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initSpinner() {
         spPrice = findViewById(R.id.spinner_Price);
-        spBrand = findViewById(R.id.spinner_Brand);
 
         adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPrice);
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
