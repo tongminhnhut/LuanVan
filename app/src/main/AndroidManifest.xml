@@ -48,7 +48,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ContactActivity" />
-        <activity android:name=".BaoHanhActivity"></activity>
+        <activity android:name=".BaoHanhActivity" />
+        <activity android:name=".SaveActivity"></activity>
     </application>
 
 </manifest>

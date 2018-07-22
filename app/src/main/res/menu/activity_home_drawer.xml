@@ -25,10 +25,6 @@
             android:icon="@drawable/ic_info_black_24dp"
             android:title="Chính sách bảo hành " />
         <item
-            android:id="@+id/nav_tintuc"
-            android:icon="@drawable/ic_language_black_24dp"
-            android:title="Tin tức " />
-        <item
             android:id="@+id/nav_dangxuat"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="Đăng xuất " />

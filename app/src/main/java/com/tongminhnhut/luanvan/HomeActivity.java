@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -82,11 +83,12 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        
 
 
         recyclerView = findViewById(R.id.recyler_menu);
         recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -192,6 +194,9 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.nav_timkiem) {
             startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+        }else if (id == R.id.nav_xemlai) {
+            startActivity(new Intent(getApplicationContext(), SaveActivity.class));
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -204,6 +209,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_thuonghieu) {
+            Toast.makeText(this, "Sẽ cập nhật sau", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_baohanh) {
             startActivity(new Intent(getApplicationContext(), BaoHanhActivity.class));
@@ -211,9 +217,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_thongtin) {
             startActivity(new Intent(getApplicationContext(), ContactActivity.class));
 
-        } else if (id == R.id.nav_tintuc) {
-
-        }else if (id==R.id.nav_dangxuat){
+        } else if (id==R.id.nav_dangxuat){
             Paper.book().destroy();
             Intent logoutItent = new Intent(getApplicationContext(), SignInActivity.class);
             logoutItent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

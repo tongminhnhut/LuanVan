@@ -13,6 +13,7 @@ public class DongHo {
     private String DayDeo;
     private String MenuId;
     private String BrandId;
+    private String Phone ;
 
 
     public DongHo() {
@@ -31,6 +32,14 @@ public class DongHo {
         DayDeo = dayDeo;
         MenuId = menuId;
         BrandId = brandId;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 
     public String getName() {

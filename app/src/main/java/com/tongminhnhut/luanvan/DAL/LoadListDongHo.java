@@ -27,11 +27,15 @@ import com.tongminhnhut.luanvan.Model.Order;
 import com.tongminhnhut.luanvan.R;
 import com.tongminhnhut.luanvan.ViewHolder.DongHoViewHolder;
 
+import java.util.Random;
+
 public class LoadListDongHo extends DongHoActivity {
+    public static DongHo currentDongHo;
     static DatabaseReference db_DongHo = FirebaseDatabase.getInstance().getReference("DongHo");
     public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> adapter ;
     public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> searchAdapter ;
     public static FirebaseRecyclerAdapter<DongHo, DongHoViewHolder> spinnerAdapter ;
+    static DatabaseReference db_Daily = FirebaseDatabase.getInstance().getReference("Save");
 
 
 
@@ -51,6 +55,11 @@ public class LoadListDongHo extends DongHoActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                        model.setPhone(SignIn_DAL.curentUser.getPhone());
+                        currentDongHo = model ;
+                        Random random = new Random();
+                        int r = random.nextInt();
+                        db_Daily.child(String.valueOf(adapter.getRef(position).getKey())).setValue(currentDongHo);
                         intent.putExtra("dongho", adapter.getRef(position).getKey());
                         context.startActivity(intent);
                     }

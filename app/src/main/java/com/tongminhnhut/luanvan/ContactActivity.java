@@ -1,5 +1,6 @@
 package com.tongminhnhut.luanvan;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +13,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ContactActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("VNFFutura.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
         setContentView(R.layout.activity_contact);
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.googlemap);
         mapFragment.getMapAsync(this);
