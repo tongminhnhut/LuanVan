@@ -1,5 +1,6 @@
 package com.tongminhnhut.luanvan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +13,28 @@ import com.tongminhnhut.luanvan.BLL.CheckConnection;
 import com.tongminhnhut.luanvan.DAL.LoadListDongHo;
 import com.tongminhnhut.luanvan.DAL.LoadProduct;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class SaveActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout ;
     RecyclerView recyclerView ;
     RecyclerView.LayoutManager layoutManager ;
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("VNFFutura.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         setContentView(R.layout.activity_save);
 
         swipeRefreshLayout = findViewById(R.id.swipe_layout_SaveProduct);

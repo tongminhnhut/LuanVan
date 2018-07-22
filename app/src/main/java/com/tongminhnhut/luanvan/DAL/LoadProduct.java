@@ -53,6 +53,6 @@ public class LoadProduct extends SaveActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.stopListening();
+        adapter.startListening();
     }
 }
