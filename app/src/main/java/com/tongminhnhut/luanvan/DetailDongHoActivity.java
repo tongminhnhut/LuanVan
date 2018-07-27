@@ -27,7 +27,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailDongHoActivity extends AppCompatActivity {
-    TextView txtName, txtPrice, txtThuonghieu, txtXuatxu, txtKichthuoc, txtBaohanh, txtMay, txtDaydeo ;
+    TextView txtName, txtPrice, txtThuonghieu, txtXuatxu, txtKichthuoc, txtBaohanh, txtMay, txtDaydeo, txtDis ;
     ImageView imgDongHo ;
     String idDongHo = "";
     DatabaseReference db_DongHo;
@@ -103,6 +103,8 @@ public class DetailDongHoActivity extends AppCompatActivity {
                 txtThuonghieu.setText(dongHo.getThuongHieu());
                 txtXuatxu.setText(dongHo.getXuatXu());
                 txtKichthuoc.setText(dongHo.getSize());
+                txtDis.setText("(-"+dongHo.getDiscount()+"%)");
+
             }
 
             @Override
@@ -128,5 +130,6 @@ public class DetailDongHoActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapseAppbar);
         numberButton = findViewById(R.id.numer_button);
+        txtDis = findViewById(R.id.txtDiscount_DetailDongHo);
     }
 }
