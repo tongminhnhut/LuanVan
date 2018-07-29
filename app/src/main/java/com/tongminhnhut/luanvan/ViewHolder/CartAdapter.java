@@ -41,15 +41,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
     public void onBindViewHolder(CartViewHolder holder, final int position) {
         holder.btnCount.setNumber(list.get(position).getQuantity());
         holder.txtTen.setText(list.get(position).getProductName());
-        DecimalFormat fm = new DecimalFormat("#,###,###");
-        Locale locale = new Locale("vn", "VN");
-//        NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
-        holder.txtGia.setText(list.get(position).getPrice());
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        holder.txtGia.setText(formatter.format(Integer.parseInt(list.get(position).getPrice()))+" VNĐ");
         Picasso.with(cartActivity.getBaseContext())
                 .load(list.get(position).getImage())
                 .into(holder.imgDH);
         //total
-        int price = (Integer.parseInt(list.get(position).getPrice())*Integer.parseInt(list.get(position).getQuantity()));
         holder.btnCount.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
@@ -64,8 +61,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>  {
                     total+=(Integer.parseInt(order.getPrice())*Integer.parseInt(item.getQuantity()));
                 }
 
-//                Locale locale = new Locale("vn", "VN");
-//                NumberFormat fm = NumberFormat.getCurrencyInstance(locale);
                 DecimalFormat fm = new DecimalFormat("#,###,###");
                 cartActivity.txtTotal.setText(fm.format(total)+" VNĐ");
             }
