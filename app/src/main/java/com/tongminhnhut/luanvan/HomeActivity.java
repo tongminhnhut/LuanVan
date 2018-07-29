@@ -209,8 +209,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_thuonghieu) {
-            Toast.makeText(this, "Sẽ cập nhật sau", Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(getApplicationContext(), BrandActivity.class));
         } else if (id == R.id.nav_baohanh) {
             startActivity(new Intent(getApplicationContext(), BaoHanhActivity.class));
 

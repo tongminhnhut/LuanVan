@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+import com.tongminhnhut.luanvan.Interface.ItemClickListener;
 import com.tongminhnhut.luanvan.Model.DongHo;
 import com.tongminhnhut.luanvan.R;
 import com.tongminhnhut.luanvan.SaveActivity;
@@ -35,6 +36,12 @@ public class LoadProduct extends SaveActivity {
                 holder.txtTen.setText(model.getName());
                 holder.txtGia.setText(model.getGia());
                 Picasso.with(context).load(model.getImage()).into(holder.imgHinh);
+                holder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+
+                    }
+                });
             }
 
             @Override

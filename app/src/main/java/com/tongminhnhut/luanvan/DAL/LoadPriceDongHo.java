@@ -33,7 +33,6 @@ public class LoadPriceDongHo extends DongHoActivity {
             query = db_DongHo.child("DongHo").orderByChild("priceId").equalTo("1");
         }else if (Id==2){
             query = db_DongHo.child("DongHo").orderByChild("priceId").equalTo("2");
-            Toast.makeText(context, "Chưa có đồng hồ cho khoảng giá này", Toast.LENGTH_SHORT).show();
         }else if (Id==3){
             query = db_DongHo.child("DongHo").orderByChild("priceId").equalTo("3");
         }else {

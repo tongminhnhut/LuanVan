@@ -25,7 +25,7 @@ import com.tongminhnhut.luanvan.ViewHolder.OrderViewHolder;
 public class LoadOrderStatus extends OrderStatusActivity {
 
     static DatabaseReference db_Reuqest ;
-    static FirebaseRecyclerAdapter<RequestOrder, OrderViewHolder> adapter;
+    public static FirebaseRecyclerAdapter<RequestOrder, OrderViewHolder> adapter;
     public static void loadDonHang( final Context context, final String phone, final RecyclerView recyclerView, final SwipeRefreshLayout swipeRefreshLayout){
         db_Reuqest = FirebaseDatabase.getInstance().getReference("RequestOrder");
 
@@ -41,6 +41,9 @@ public class LoadOrderStatus extends OrderStatusActivity {
                 holder.txtName.setText(model.getName());
                 holder.txtPhone.setText(model.getPhone());
                 holder.txtStatus.setText(ConvertToStatus.convertCodeStatus(model.getStatus()+""));
+//                if (adapter.getItem(position).getStatus().equals("1")){
+//                    holder.btnDelete.setEnabled(false);
+//                }
                 holder.btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -23,6 +23,8 @@ import com.tongminhnhut.luanvan.DAL.Database;
 import com.tongminhnhut.luanvan.Model.DongHo;
 import com.tongminhnhut.luanvan.Model.Order;
 
+import java.text.DecimalFormat;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -96,7 +98,8 @@ public class DetailDongHoActivity extends AppCompatActivity {
                         .into(imgDongHo);
                 collapsingToolbarLayout.setTitle(dongHo.getName());
                 txtName.setText(dongHo.getName());
-                txtPrice.setText(dongHo.getGia());
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                txtPrice.setText(formatter.format(Integer.parseInt(dongHo.getGia()))+" VNĐ");
                 txtBaohanh.setText(dongHo.getBaoHanh());
                 txtDaydeo.setText(dongHo.getDayDeo());
                 txtMay.setText(dongHo.getMay());

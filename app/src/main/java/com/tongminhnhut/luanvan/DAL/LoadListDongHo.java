@@ -27,6 +27,7 @@ import com.tongminhnhut.luanvan.Model.Order;
 import com.tongminhnhut.luanvan.R;
 import com.tongminhnhut.luanvan.ViewHolder.DongHoViewHolder;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class LoadListDongHo extends DongHoActivity {
@@ -49,7 +50,8 @@ public class LoadListDongHo extends DongHoActivity {
             @Override
             protected void onBindViewHolder(@NonNull DongHoViewHolder holder, final int position, @NonNull final DongHo model) {
                 holder.txtTen.setText(model.getName());
-                holder.txtGia.setText(model.getGia());
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                holder.txtGia.setText(formatter.format(Integer.parseInt(model.getGia()))+" VNĐ");
                 Picasso.with(context).load(model.getImage()).into(holder.imgHinh);
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
@@ -57,8 +59,6 @@ public class LoadListDongHo extends DongHoActivity {
                         intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                         model.setPhone(SignIn_DAL.curentUser.getPhone());
                         currentDongHo = model ;
-                        Random random = new Random();
-                        int r = random.nextInt();
                         db_Daily.child(String.valueOf(adapter.getRef(position).getKey())).setValue(currentDongHo);
                         intent.putExtra("dongho", adapter.getRef(position).getKey());
                         context.startActivity(intent);
@@ -108,29 +108,33 @@ public class LoadListDongHo extends DongHoActivity {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    public static void loadDongHoByPrice(int Id, RecyclerView recyclerView, final Context context, final Intent intent, final SwipeRefreshLayout swipeRefreshLayout){
-        Query query = db_DongHo.orderByChild("menuId").equalTo("01");
+    public static void loadDongHoBrand(String Id, RecyclerView recyclerView, final Context context, final Intent intent, SwipeRefreshLayout swipeRefreshLayout){
+        Query query = db_DongHo.orderByChild("brandId").equalTo(Id);
 
         FirebaseRecyclerOptions<DongHo> options = new FirebaseRecyclerOptions.Builder<DongHo>()
                 .setQuery(query, DongHo.class)
                 .build();
-        spinnerAdapter = new FirebaseRecyclerAdapter<DongHo, DongHoViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<DongHo, DongHoViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull DongHoViewHolder holder, final int position, @NonNull final DongHo model) {
                 holder.txtTen.setText(model.getName());
-                holder.txtGia.setText(model.getGia());
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                holder.txtGia.setText(formatter.format(Integer.parseInt(model.getGia()))+" VNĐ");
                 Picasso.with(context).load(model.getImage()).into(holder.imgHinh);
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("dongho", spinnerAdapter.getRef(position).getKey());
+                        model.setPhone(SignIn_DAL.curentUser.getPhone());
+                        currentDongHo = model ;
+                        db_Daily.child(String.valueOf(adapter.getRef(position).getKey())).setValue(currentDongHo);
+                        intent.putExtra("dongho", adapter.getRef(position).getKey());
                         context.startActivity(intent);
                     }
                 });
 
                 final boolean isExist = new Database(context).checkExistDongHo(
-                        spinnerAdapter.getRef(position).getKey(),
+                        adapter.getRef(position).getKey(),
                         SignIn_DAL.curentUser.getPhone()
                 );
 
@@ -141,7 +145,7 @@ public class LoadListDongHo extends DongHoActivity {
                         if (!isExist) {
                             new Database(context).addCarts(new Order(
                                     SignIn_DAL.curentUser.getPhone(),
-                                    spinnerAdapter.getRef(position).getKey(),
+                                    adapter.getRef(position).getKey(),
                                     model.getName(),
                                     "1",
                                     model.getGia(),
@@ -150,7 +154,7 @@ public class LoadListDongHo extends DongHoActivity {
 
                             ));
                         }else {
-                            new Database(context).increaseCart(spinnerAdapter.getRef(position).getKey(),SignIn_DAL.curentUser.getPhone());
+                            new Database(context).increaseCart(adapter.getRef(position).getKey(),SignIn_DAL.curentUser.getPhone());
                         }
 
                         Toast.makeText(context, "Add to Cart !", Toast.LENGTH_SHORT).show();
@@ -166,11 +170,12 @@ public class LoadListDongHo extends DongHoActivity {
                 return new DongHoViewHolder(view);
             }
         };
-        spinnerAdapter.startListening();
-        recyclerView.setAdapter(spinnerAdapter);
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
         recyclerView.getAdapter().notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
+
 
     public static void loadAllDongHo( RecyclerView recyclerView, final Context context, final Intent intent){
 
